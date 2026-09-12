@@ -4,6 +4,7 @@ import { useId, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { chitRules, fingers, mnemonic, originStory, type FingerCode } from "@/content/magichand";
 import { openStatement } from "@/content/statements";
+import { HAND_LAYOUT, HAND_DRAW_ORDER, THUMB_KNUCKLE_LINE_PROPS, type HandLayout } from "@/components/dranne/hand-illustration";
 import { cn } from "cn";
 
 /**
@@ -24,42 +25,25 @@ import { cn } from "cn";
  * skips the SVG entirely.
  */
 
-type Layout = {
-  left: string;
-  top: string;
-  width: string;
-  height: string;
-  rotate?: number;
-  viewBox: string;
-  path: string;
-  extra?: React.ReactNode;
-};
-
-const FINGER_PATH =
-  "M30 6 C42 6 48 18 48 33 L48 168 C48 186 40 196 30 196 C20 196 12 186 12 168 L12 33 C12 18 18 6 30 6 Z";
-
-const THUMB_PATH =
-  "M72 8 C92 8 102 24 100 44 C99 58 91 68 80 74 C95 81 106 98 106 119 L106 149 C106 172 87 191 60 191 C34 191 16 172 16 149 L16 66 C16 38 33 13 62 9 C65 8 69 8 72 8 Z";
-
 const THUMB_KNUCKLE_LINE = (
-  <line x1="14" y1="76" x2="108" y2="76" stroke="currentColor" strokeWidth="3" strokeDasharray="6 5" opacity="0.6" />
+  <line
+    x1={THUMB_KNUCKLE_LINE_PROPS.x1}
+    y1={THUMB_KNUCKLE_LINE_PROPS.y1}
+    x2={THUMB_KNUCKLE_LINE_PROPS.x2}
+    y2={THUMB_KNUCKLE_LINE_PROPS.y2}
+    stroke="currentColor"
+    strokeWidth="3"
+    strokeDasharray={THUMB_KNUCKLE_LINE_PROPS.strokeDasharray}
+    opacity={THUMB_KNUCKLE_LINE_PROPS.opacity}
+  />
 );
 
-const PALM_PATH =
-  "M60 30 C40 30 24 48 24 74 L24 172 C24 218 62 256 112 256 L188 256 C238 256 276 218 276 172 L276 92 C276 60 252 34 220 34 C204 34 192 44 186 58 C182 42 168 28 148 28 C130 28 116 40 110 56 C104 38 88 24 68 24 C64 24 62 27 60 30 Z";
-
-const LAYOUT: Record<FingerCode, Layout> = {
-  O: { left: "-2%", top: "38%", width: "25%", height: "30%", rotate: -26, viewBox: "0 0 120 200", path: THUMB_PATH, extra: THUMB_KNUCKLE_LINE },
-  P: { left: "21%", top: "4%", width: "16%", height: "40%", viewBox: "0 0 60 200", path: FINGER_PATH },
-  C: { left: "39%", top: "-4%", width: "16%", height: "46%", viewBox: "0 0 60 200", path: FINGER_PATH },
-  F: { left: "57%", top: "2%", width: "16%", height: "42%", viewBox: "0 0 60 200", path: FINGER_PATH },
-  M: { left: "75%", top: "13%", width: "15%", height: "32%", viewBox: "0 0 60 200", path: FINGER_PATH },
-  V: { left: "4%", top: "36%", width: "92%", height: "62%", viewBox: "0 0 300 280", path: PALM_PATH },
+const LAYOUT: Record<FingerCode, HandLayout> = {
+  ...HAND_LAYOUT,
+  O: { ...HAND_LAYOUT.O, extra: THUMB_KNUCKLE_LINE },
 };
 
-// Draw order matters: the palm renders first so the four fingers and thumb
-// layer visually on top of it at the connecting edge.
-const DRAW_ORDER: FingerCode[] = ["V", "O", "P", "C", "F", "M"];
+const DRAW_ORDER = HAND_DRAW_ORDER;
 
 export function MagicHand() {
   const shouldReduceMotion = useReducedMotion();

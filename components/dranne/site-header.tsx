@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/sheet";
 import { DesktopNav, MobileNavList } from "@/components/dranne/nav-links";
 import { ThemeToggle } from "@/components/dranne/theme-toggle";
+import { Logo } from "@/components/dranne/logo";
 import { primaryNav } from "@/content/nav";
 import { org } from "@/content/org";
 
@@ -22,9 +23,8 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/80">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-2 shrink-0" aria-label="dr.Anne Association home">
-          <span className="font-display text-2xl text-brand-red">dr.Anne</span>
-          <span className="hidden sm:inline text-sm font-medium text-muted-foreground">Association</span>
+        <Link href="/" className="shrink-0" aria-label="dr.Anne Association home">
+          <Logo />
         </Link>
 
         <DesktopNav items={primaryNav} />

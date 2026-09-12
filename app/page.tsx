@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { Button } from "@/components/ui/button";
 import { org } from "@/content/org";
 import { benefits } from "@/content/benefits";
 import { board } from "@/content/board";
+import { HeroSection } from "@/components/dranne/hero-section";
 import { ThreeKeysTriptych } from "@/components/dranne/three-keys-triptych";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 
@@ -17,30 +17,7 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
-      <section className="relative overflow-hidden bg-brand-red text-white">
-        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
-          <div className="max-w-2xl">
-            <h1 className="font-display text-5xl leading-tight sm:text-6xl">
-              {org.invitationHeading.value}
-            </h1>
-            <p className="mt-6 text-lg text-white/90">{org.subheadings.curious.value}</p>
-            <p className="mt-3 text-lg text-white/90">{org.subheadings.journey.value}</p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button asChild size="lg" variant="secondary">
-                <Link href="/get-started">Get Started</Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="border-white/40 bg-transparent text-white hover:bg-white/10"
-              >
-                <Link href="/the-plan/how-it-works">See How It Works</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroSection />
 
       <section className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
         <p className="text-lg leading-relaxed text-foreground">{org.aboutParagraph.value}</p>
@@ -86,11 +63,11 @@ export default function HomePage() {
             src="/assets/source/About-1536x681.png"
             alt="The dr.Anne plan Expanded Edition book on a shelf"
             fill
-            className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-105"
+            className="object-cover object-[78%_38%] transition-transform duration-500 motion-safe:group-hover:scale-105"
           />
-          <span className="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 via-black/10 to-transparent p-6">
+          <span className="absolute inset-0 flex items-end bg-gradient-to-t from-black/65 via-black/15 to-transparent p-6">
             <span className="rounded-full bg-white px-5 py-2 text-sm font-semibold text-brand-red-ink">
-              See how it works →
+              See how it works
             </span>
           </span>
         </Link>
@@ -128,7 +105,7 @@ export default function HomePage() {
             Board of Directors
           </h2>
           <Link href="/about/board" className="text-sm font-medium text-brand-red hover:underline">
-            Meet the full board →
+            Meet the full board
           </Link>
         </div>
         <div className="mt-8 grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-5">

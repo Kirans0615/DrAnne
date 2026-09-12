@@ -52,7 +52,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${lobster.variable} ${robotoFlex.variable} ${sourceSerif.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
           <TooltipProvider>
             <SkipLink />
             <SiteHeader />

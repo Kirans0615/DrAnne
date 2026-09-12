@@ -4,7 +4,7 @@
 
 | File | What it is | Where it's used |
 |---|---|---|
-| `Banner.jpg` | Red dr.Anne Association wordmark banner | Sampled for `--color-brand-red` (see `docs/BRAND.md`); re-cut as `logo.svg` trace |
+| `Banner.jpg` | Red dr.Anne Association wordmark banner | Sampled for `--color-brand-red` (see `docs/BRAND.md`). **Superseded the earlier "re-cut as logo.svg trace" plan** — a raster/bezier trace of a compressed JPEG banner would only work on a red background and would look soft at header size. Instead, `components/dranne/logo.tsx` recreates the wordmark typographically: real Lobster text for "dr.Anne" + "Association" (so it's crisp on any background and either theme) plus a small hand-drawn SVG teardrop-swirl mark reproducing the banner's pink accent glyph. Revisit with a real vector logo if/when the client supplies one. |
 | `About-1536x681.png` | Book-on-desk photograph | Home / About hero imagery |
 | `Anne-240x300.png` | Anne Seifert portrait | Board grid, `content/board.ts` |
 | `Lawrence-235x300.png` | Lawrence Wasserman portrait | Board grid |
