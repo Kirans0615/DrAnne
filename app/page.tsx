@@ -1,69 +1,150 @@
 import Image from "next/image";
+import Link from "next/link";
+import type { Metadata } from "next";
+import { Button } from "@/components/ui/button";
+import { org } from "@/content/org";
+import { benefits } from "@/content/benefits";
+import { keys, keysSource } from "@/content/keys";
+import { board } from "@/content/board";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "Home",
+  description:
+    "The dr.Anne Association teaches portion control, movement and stress reduction through the MagicHand system — a nonprofit 501(c)(3) founded by epidemiologist Dr. Anne Seifert.",
+};
+
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      <section className="relative overflow-hidden bg-brand-red text-white">
+        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+          <div className="max-w-2xl">
+            <h1 className="font-display text-5xl leading-tight sm:text-6xl">
+              {org.invitationHeading.value}
+            </h1>
+            <p className="mt-6 text-lg text-white/90">{org.subheadings.curious.value}</p>
+            <p className="mt-3 text-lg text-white/90">{org.subheadings.journey.value}</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Button asChild size="lg" variant="secondary">
+                <Link href="/get-started">Get Started</Link>
+              </Button>
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="border-white/40 bg-transparent text-white hover:bg-white/10"
+              >
+                <Link href="/the-plan/how-it-works">See How It Works</Link>
+              </Button>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      <section className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
+        <p className="text-lg leading-relaxed text-foreground">{org.aboutParagraph.value}</p>
+      </section>
+
+      <section aria-labelledby="mission-heading" className="bg-muted/30 py-16">
+        <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+          <h2 id="mission-heading" className="font-display text-3xl text-brand-red">
+            Our Mission
+          </h2>
+          <p className="mt-4 text-lg leading-relaxed">{org.mission.value}</p>
         </div>
-      </main>
-    </div>
+      </section>
+
+      <section aria-labelledby="keys-heading" className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+        <h2 id="keys-heading" className="font-display text-center text-3xl text-brand-red">
+          The Three Keys
+        </h2>
+        <p className="mx-auto mt-3 max-w-2xl text-center text-muted-foreground">{keysSource.value}</p>
+        <div className="mt-10 grid gap-6 sm:grid-cols-3">
+          {(Object.entries(keys) as Array<[keyof typeof keys, (typeof keys)[keyof typeof keys]]>).map(
+            ([id, key]) => (
+              <div
+                key={id}
+                className="rounded-xl border border-border p-6 text-center"
+                style={{ borderTopWidth: "4px", borderTopColor: key.color }}
+              >
+                <h3 className="text-xl font-semibold" style={{ color: key.color }}>
+                  {key.label}
+                </h3>
+                <p className="mt-2 text-sm text-muted-foreground">{key.description}</p>
+              </div>
+            )
+          )}
+        </div>
+      </section>
+
+      {/* ContainerScroll reveal (build prompt §7.2 / §11) lands here once the
+          component-library workstream ships components/ui/container-scroll-animation.tsx.
+          Placeholder image in the meantime so the section isn't empty. */}
+      <section aria-label="The dr.Anne plan in practice" className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="overflow-hidden rounded-2xl border border-border">
+          <Image
+            src="/assets/source/About-1536x681.png"
+            alt="A copy of the dr.Anne plan book resting on a desk"
+            width={1536}
+            height={681}
+            className="h-auto w-full object-cover"
+          />
+        </div>
+      </section>
+
+      <section aria-labelledby="benefits-heading" className="bg-muted/30 py-16">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <h2 id="benefits-heading" className="font-display text-center text-3xl text-brand-red">
+            Benefits of the dr.Anne plan
+          </h2>
+          <div className="mt-10 grid gap-8 sm:grid-cols-3">
+            {benefits.map((column) => (
+              <div key={column.heading}>
+                <h3 className="text-lg font-semibold">{column.heading}</h3>
+                <ul className="mt-3 space-y-2 text-muted-foreground">
+                  {column.items.map((item) => (
+                    <li key={item} className="flex gap-2">
+                      <span aria-hidden="true" className="text-brand-red">
+                        &bull;
+                      </span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <p className="mx-auto mt-12 max-w-2xl text-center text-lg font-medium">{org.closingLine.value}</p>
+        </div>
+      </section>
+
+      <section aria-labelledby="board-heading" className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between gap-4">
+          <h2 id="board-heading" className="font-display text-3xl text-brand-red">
+            Board of Directors
+          </h2>
+          <Link href="/about/board" className="text-sm font-medium text-brand-red hover:underline">
+            Meet the full board →
+          </Link>
+        </div>
+        <div className="mt-8 grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-5">
+          {board.map((member) => (
+            <Link key={member.name} href="/about/board" className="group text-center">
+              <div className="mx-auto aspect-[4/5] w-full max-w-[160px] overflow-hidden rounded-lg border border-border">
+                <Image
+                  src={member.photo}
+                  alt={member.alt}
+                  width={240}
+                  height={300}
+                  className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                />
+              </div>
+              <p className="mt-2 text-sm font-medium">{member.name}</p>
+              <p className="text-xs text-muted-foreground">{member.role}</p>
+            </Link>
+          ))}
+        </div>
+      </section>
+    </>
   );
 }
