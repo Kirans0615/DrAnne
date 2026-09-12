@@ -1,6 +1,46 @@
 # Assumptions register
 
-Pre-answered per build prompt §15 — logged here and applied without stopping the build.
+## Mid-build pivot: static site, not a dynamic Cloudflare Workers app
+
+Partway through the build (after the foundation and most of the component library
+had already landed), the user overrode `docs/BUILD-PROMPT.md`'s stack: **this is a
+static site, not a dynamic app.** Concretely:
+
+- **No forms of any kind.** The Contact form, Circle registration form, Independent
+  provider application, partner enquiry, media/tips/recipe submissions — all of it
+  is dropped. Every place the original spec had a `<form>`, this build has a
+  `mailto:` link to `ask@` / `team@` / `vip@dranne.org` instead, exactly like the
+  legacy sites' plain-text emails, but as real clickable links this time.
+- **The Registry is a static curated list** (`content/circles.ts`), not a live,
+  self-service, moderated database. New circles get added to that file by hand
+  (via a PR) once someone emails `team@` to register — there is no public
+  submission form and no moderation queue to build.
+- **No backend at all**: no D1, no Durable Objects, no Cloudflare Workers runtime,
+  no Turnstile, no rate limiting, no email-sending server code. `@opennextjs/
+  cloudflare`, `wrangler`, `@cloudflare/workers-types`, `drizzle-orm`, `drizzle-kit`,
+  `resend`, `react-hook-form`, `@hookform/resolvers`, and `zod` were all installed
+  during the earlier dynamic-app phase and have since been **uninstalled** —
+  `components/ui/form.tsx` was deleted as dead code along with them.
+- **Hosting: GitHub Pages**, not Cloudflare Workers. `next.config.ts` now sets
+  `output: "export"` (static HTML/CSS/JS, no server runtime, no API routes, no
+  Server Actions), `trailingSlash: true` (so GitHub Pages resolves `/about/` to
+  `/about/index.html` correctly), and `images.unoptimized: true` (GitHub Pages has
+  no Image Optimization API). `public/CNAME` points the custom domain `dranne.org`
+  at the repo root. `.github/workflows/deploy.yml` builds and deploys on every
+  push to `main` via `actions/deploy-pages`.
+- **What survives from the original spec unchanged**: the entire `/content` layer
+  and its §13 conflict resolutions, the brand system, all ten §11 signature
+  interactions (`Book`/`ContainerScroll`/`MagicHand`/Chit Counter/MagicSquare
+  wheel/Nine Points path/Three Keys triptych — none of these ever depended on a
+  backend; the Chit Counter and MagicSquare wheel were already explicitly
+  in-memory-only per the original spec), the IA, and the a11y/SEO/performance
+  goals. `docs/BUILD-PROMPT.md` is kept as the historical record of the original
+  ask; treat every section of it that assumes Cloudflare D1/Workers/forms as
+  **superseded by this note**, not as current direction.
+
+---
+
+Pre-answered per build prompt §15 — logged here and applied without stopping the build. Items below that reference the dynamic-app stack (Registry moderation, D1/rate-limiting, EIN-on-a-form, etc.) are superseded by the pivot above where the two conflict.
 
 1. **Compromise containment** — assumed the client is handling `dranne.org` remediation per `docs/SECURITY-RUNBOOK.md`. This codebase is built host-agnostic; the DNS cutover is documented in `docs/DEPLOY.md` (to be written in the deployment workstream).
 2. **Domain** — `dranne.org`. Canonicals, sitemap and redirects all target it.

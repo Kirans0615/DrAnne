@@ -1,8 +1,24 @@
 # Architecture
 
+> **Pivoted to a static site partway through the build** — see the note at the top
+> of `docs/ASSUMPTIONS.md`. This doc reflects the current, static-export
+> architecture, not the Cloudflare Workers/D1 stack the original build prompt
+> specified.
+
 ## Stack
 
-Next.js 15 (App Router, RSC, TypeScript strict) · Tailwind CSS v4 (CSS-first `@theme` tokens) · shadcn/ui (New York style, Radix primitives) · `motion` for client-side animation · Zod-validated typed content in `/content` · Cloudflare Workers via `@opennextjs/cloudflare` for hosting · D1 / KV / Durable Objects / R2 for data, cache, coordination and files · Cloudflare Email Routing + a transactional provider · Cloudflare Turnstile on every form · Cloudflare Web Analytics (cookieless) · Vitest + Playwright + axe-core + Lighthouse CI for testing.
+Next.js 15 (App Router, TypeScript strict), built with `output: "export"` — a
+fully static site, no server runtime, no API routes, no Server Actions · Tailwind
+CSS v4 (CSS-first `@theme` tokens) · shadcn/ui (New York style, Radix primitives)
+· `motion` for client-side animation · typed content in `/content` (no Zod
+runtime validation needed without forms — the types alone are the contract) ·
+hosted on **GitHub Pages** via `.github/workflows/deploy.yml`, custom domain
+`dranne.org` via `public/CNAME` · Vitest + Playwright + axe-core + Lighthouse CI
+for testing.
+
+No database, no forms, no email-sending backend. Every contact point is a
+`mailto:` link. The Registry (`content/circles.ts`) is a static list maintained
+by hand, not a live submission/moderation system.
 
 ## Component paths — mandatory split
 
@@ -31,7 +47,7 @@ App Router, one route segment per IA entry in `content/nav.ts`. The member layer
 
 ## Redirects & 410s
 
-`content/redirects.ts` holds the full 301 map (build prompt §16); the migration workstream wires this into `next.config.ts` `redirects()` (static 301s, no middleware needed for a fixed list) plus a small `middleware.ts` matcher that serves `410` for the known spam-URL patterns from `docs/SECURITY-RUNBOOK.md` §0, once DNS points at the new site.
+A static export can't run `next.config.ts`'s `redirects()` or a `middleware.ts` — there's no server to execute them. Since the plan is to keep `dranne.org`'s DNS on Cloudflare (free tier) in front of GitHub Pages origin hosting, the redirect map in `content/redirects.ts` and the 410-for-spam-URLs rule from `docs/SECURITY-RUNBOOK.md` §0 are implemented as **Cloudflare Redirect Rules** at the edge — configuration, not application code. This still satisfies "static site" (zero server-side app logic) while getting real 301s and 410s. See `docs/DEPLOY.md` (handover workstream) for the exact rule list to enter in the Cloudflare dashboard.
 
 ## Deviations from the build prompt
 

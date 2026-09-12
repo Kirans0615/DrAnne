@@ -4,8 +4,9 @@ import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { org } from "@/content/org";
 import { benefits } from "@/content/benefits";
-import { keys, keysSource } from "@/content/keys";
 import { board } from "@/content/board";
+import { ThreeKeysTriptych } from "@/components/dranne/three-keys-triptych";
+import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -54,43 +55,46 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section aria-labelledby="keys-heading" className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
-        <h2 id="keys-heading" className="font-display text-center text-3xl text-brand-red">
-          The Three Keys
-        </h2>
-        <p className="mx-auto mt-3 max-w-2xl text-center text-muted-foreground">{keysSource.value}</p>
-        <div className="mt-10 grid gap-6 sm:grid-cols-3">
-          {(Object.entries(keys) as Array<[keyof typeof keys, (typeof keys)[keyof typeof keys]]>).map(
-            ([id, key]) => (
-              <div
-                key={id}
-                className="rounded-xl border border-border p-6 text-center"
-                style={{ borderTopWidth: "4px", borderTopColor: key.color }}
-              >
-                <h3 className="text-xl font-semibold" style={{ color: key.color }}>
-                  {key.label}
-                </h3>
-                <p className="mt-2 text-sm text-muted-foreground">{key.description}</p>
-              </div>
-            )
-          )}
-        </div>
-      </section>
+      <ThreeKeysTriptych />
 
-      {/* ContainerScroll reveal (build prompt §7.2 / §11) lands here once the
-          component-library workstream ships components/ui/container-scroll-animation.tsx.
-          Placeholder image in the meantime so the section isn't empty. */}
-      <section aria-label="The dr.Anne plan in practice" className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="overflow-hidden rounded-2xl border border-border">
+      {/* The single ContainerScroll moment on the site (build prompt §7.2:
+          "use it exactly once, on the homepage, for the primary reveal").
+          The full interactive MagicHand explainer is a tall, self-contained
+          section in its own right (heading + full data table) — it lives at
+          /the-plan/magichand, not crammed into this fixed-height card. The
+          only photo available for this reveal (About-1536x681.png) has its
+          own "About" wordmark baked in, so the copy here matches what's
+          actually shown (the book) rather than over-claiming MagicHand
+          content the image doesn't depict. */}
+      <ContainerScroll
+        titleComponent={
+          <div>
+            <h2 className="font-display text-3xl text-brand-red sm:text-4xl">
+              The dr.Anne plan, in your hands
+            </h2>
+            <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
+              One book, nine Points, a lifetime of Practice Circles.
+            </p>
+          </div>
+        }
+      >
+        <Link
+          href="/the-plan/how-it-works"
+          className="group relative block size-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-red"
+        >
           <Image
             src="/assets/source/About-1536x681.png"
-            alt="A copy of the dr.Anne plan book resting on a desk"
-            width={1536}
-            height={681}
-            className="h-auto w-full object-cover"
+            alt="The dr.Anne plan Expanded Edition book on a shelf"
+            fill
+            className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-105"
           />
-        </div>
-      </section>
+          <span className="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 via-black/10 to-transparent p-6">
+            <span className="rounded-full bg-white px-5 py-2 text-sm font-semibold text-brand-red-ink">
+              See how it works →
+            </span>
+          </span>
+        </Link>
+      </ContainerScroll>
 
       <section aria-labelledby="benefits-heading" className="bg-muted/30 py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">

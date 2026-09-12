@@ -2,6 +2,8 @@
 
 Written for the record per build prompt §0/§14 — executed immediately, not gated on approval.
 
+**Pivoted mid-build to a static site** (no forms, no backend, GitHub Pages hosting) — see `docs/ASSUMPTIONS.md`. Workstreams B3, E and F below are updated in place to reflect that; the rest were unaffected since components/pages never depended on a backend.
+
 ## A. Foundation — done
 
 Next.js 15 + Tailwind v4 + shadcn (new-york-v4, Radix, pinned CLI 3.8.5) scaffold; brand tokens sampled from `Banner.jpg` and encoded in `app/globals.css`; Lobster/Roboto Flex/Source Serif 4 via `next/font`; layout shell (header with single responsive nav, footer, skip link, theme toggle); full `/content` layer transcribed from `dranne-audit.md` with §13 resolutions applied and `Sourced<T>` provenance; `scripts/check-content.ts` CI gate; typo-absence Vitest suite; lint/typecheck/build all green. Docs: `SECURITY-RUNBOOK.md`, `ASSUMPTIONS.md`, `CLIENT-DECISIONS.md`, `ASSET-MANIFEST.md`, `ARCHITECTURE.md`, `BRAND.md`, this file.
@@ -10,7 +12,7 @@ Next.js 15 + Tailwind v4 + shadcn (new-york-v4, Radix, pinned CLI 3.8.5) scaffol
 
 1. `Book` (all nine defects fixed) + shelf + detail drawer; `ContainerScroll` (all ten defects fixed).
 2. MagicHand SVG, Chit Counter, MagicSquare wheel, Nine Points path, Three Keys triptych (triptych's static version already on the homepage; scroll-pinned behavior lands here).
-3. Forms system (Zod schemas shared client/server, Turnstile, rate limiting), D1 schema + migrations, email routing.
+3. ~~Forms system, D1, Turnstile, rate limiting, email routing~~ — dropped. No forms anywhere on the static site; every contact point is a `mailto:` link.
 
 ## C. Public pages — parallel
 
@@ -25,11 +27,11 @@ Next.js 15 + Tailwind v4 + shadcn (new-york-v4, Radix, pinned CLI 3.8.5) scaffol
 
 ## E. Get Started cluster
 
-Join a Circle, Find a Circle (Registry directory + form + moderation queue), Independent Providers, Volunteer, Independent.
+Join a Circle, Find a Circle (Registry as a static list from `content/circles.ts`, no form, no moderation queue — new circles are added to the file by hand after an email to `team@`), Independent Providers, Volunteer, Independent.
 
 ## F. Migration and SEO
 
-Redirect map (`content/redirects.ts` → `next.config.ts` `redirects()`), 410 middleware for spam URL patterns, schema.org structured data, sitemap/robots, OG image generation, metadata sweep.
+Redirect map (`content/redirects.ts` implemented as Cloudflare Redirect Rules at the DNS layer, not in-app — see `docs/ARCHITECTURE.md`), spam-URL 410s the same way, schema.org structured data, sitemap/robots, OG image generation, metadata sweep.
 
 ## G. Motion asset
 
