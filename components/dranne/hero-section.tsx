@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 import { Button } from "@/components/ui/button";
-import { HeroHandMark } from "@/components/dranne/hero-hand-mark";
 import { org } from "@/content/org";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -64,12 +64,18 @@ export function HeroSection() {
         </div>
 
         <motion.div
-          initial={shouldReduceMotion ? false : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="mx-auto w-full max-w-xs lg:max-w-none"
+          initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.94, rotate: -2 }}
+          animate={{ opacity: 1, scale: 1, rotate: 0 }}
+          transition={{ duration: 0.8, delay: shouldReduceMotion ? 0 : 0.25, ease: EASE }}
+          className="relative mx-auto aspect-[4/3] w-full max-w-md overflow-hidden rounded-2xl shadow-2xl shadow-black/30 ring-1 ring-white/20 lg:max-w-none"
         >
-          <HeroHandMark />
+          <Image
+            src="/assets/source/About-1536x681.png"
+            alt="The dr.Anne plan Expanded Edition book, displayed on a shelf"
+            fill
+            priority
+            className="object-cover object-[78%_38%]"
+          />
         </motion.div>
       </div>
     </section>
