@@ -24,7 +24,7 @@ const KNOWN_BAD_STRINGS = [
   "Apetit",
   "Descripton",
   "consultaitons",
-  "ounter app",
+  "Chits ounter",
   "Reseach",
   "progam",
   "Barkeley",
