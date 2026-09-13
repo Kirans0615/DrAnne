@@ -73,10 +73,10 @@ export default function HomePage() {
           className="group relative block size-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-red"
         >
           <Image
-            src="/assets/source/About-1536x681.png"
-            alt="The dr.Anne plan Expanded Edition book on a shelf, in a wider view of the display"
+            src="/assets/source/image5.png"
+            alt="A facilitator assisting a participant during a dr.Anne plan session"
             fill
-            className="object-cover object-[55%_30%] transition-transform duration-500 motion-safe:group-hover:scale-105"
+            className="object-cover object-[center_55%] transition-transform duration-500 motion-safe:group-hover:scale-105"
           />
           <span className="absolute inset-0 flex items-end bg-gradient-to-t from-black/65 via-black/15 to-transparent p-6">
             <span className="rounded-full bg-white px-5 py-2 text-sm font-semibold text-brand-red-ink">
