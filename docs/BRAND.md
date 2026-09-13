@@ -43,4 +43,4 @@ Fluid `clamp()`, ratio 1.2 (mobile) → 1.25 (desktop). Body copy capped at 68ch
 
 ## Dark mode
 
-Shipped. The red needs a distinct dark-mode treatment (a straight `#B41900` on a dark background loses the AA margin against typical dark surface tones), and the `Book` component's cover colors get explicit dark-mode variants rather than relying on `dark:` inversion of a light-mode fill.
+Removed per direct client request — the site is light-mode only now. `next-themes`, the theme toggle, and the `.dark` CSS variable block were all taken out; the `@custom-variant dark (&:is(.dark *))` line stays in `globals.css` so any stray `dark:` utility class anywhere in the codebase stays permanently inert (nothing ever applies a `.dark` class) rather than silently falling back to `prefers-color-scheme`-driven dark mode.

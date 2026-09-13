@@ -12,7 +12,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { DesktopNav, MobileNavList } from "@/components/dranne/nav-links";
-import { ThemeToggle } from "@/components/dranne/theme-toggle";
 import { Logo } from "@/components/dranne/logo";
 import { primaryNav } from "@/content/nav";
 import { org } from "@/content/org";
@@ -30,7 +29,6 @@ export function SiteHeader() {
         <DesktopNav items={primaryNav} />
 
         <div className="flex items-center gap-2">
-          <ThemeToggle />
           <Button asChild className="hidden sm:inline-flex bg-brand-red text-white hover:bg-brand-red/90">
             <a href={org.paypalDonateUrl} target="_blank" rel="noopener noreferrer">
               Donate

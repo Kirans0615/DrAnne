@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useReducedMotion } from "motion/react";
+import { basePath } from "@/lib/base-path";
 
 /**
  * The Good Health at Hand trailer, used as a silent, looping background
@@ -44,14 +45,14 @@ export function VideoBackground({ className }: { className?: string }) {
   if (shouldReduceMotion) {
     // Plain <img>, not next/image: this is the reduced-motion fallback for a <video>.
     // eslint-disable-next-line @next/next/no-img-element
-    return <img src="/assets/video/dranne-trailer-poster.jpg" alt="" aria-hidden="true" className={className} />;
+    return <img src={`${basePath}/assets/video/dranne-trailer-poster.jpg`} alt="" aria-hidden="true" className={className} />;
   }
 
   return (
     <video
       ref={videoRef}
       className={className}
-      poster="/assets/video/dranne-trailer-poster.jpg"
+      poster={`${basePath}/assets/video/dranne-trailer-poster.jpg`}
       autoPlay
       muted
       loop
@@ -59,7 +60,7 @@ export function VideoBackground({ className }: { className?: string }) {
       preload="auto"
       aria-hidden="true"
     >
-      <source src="/assets/video/dranne-trailer.mp4" type="video/mp4" />
+      <source src={`${basePath}/assets/video/dranne-trailer.mp4`} type="video/mp4" />
     </video>
   );
 }

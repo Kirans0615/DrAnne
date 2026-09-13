@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Lobster, Roboto_Flex, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/dranne/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { SkipLink } from "@/components/dranne/skip-link";
 import { SiteHeader } from "@/components/dranne/site-header";
@@ -48,20 +47,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en-US"
-      suppressHydrationWarning
       className={`${lobster.variable} ${robotoFlex.variable} ${sourceSerif.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
-        <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
-          <TooltipProvider>
-            <SkipLink />
-            <SiteHeader />
-            <main id="main-content" className="flex-1">
-              {children}
-            </main>
-            <SiteFooter />
-          </TooltipProvider>
-        </ThemeProvider>
+        <TooltipProvider>
+          <SkipLink />
+          <SiteHeader />
+          <main id="main-content" className="flex-1">
+            {children}
+          </main>
+          <SiteFooter />
+        </TooltipProvider>
       </body>
     </html>
   );

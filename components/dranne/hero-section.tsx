@@ -30,7 +30,7 @@ export function HeroSection() {
         className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(0,0,0,0.25),transparent_60%)]"
       />
 
-      <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-20 sm:px-6 lg:grid-cols-[1fr_1.1fr] lg:gap-8 lg:py-28 xl:px-8">
+      <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-20 sm:px-6 lg:grid-cols-[0.95fr_1.15fr] lg:gap-8 lg:py-28 xl:px-8">
         <div className="max-w-2xl">
           <motion.h1
             {...reveal(0)}
@@ -67,14 +67,14 @@ export function HeroSection() {
           initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.94, rotate: -2 }}
           animate={{ opacity: 1, scale: 1, rotate: 0 }}
           transition={{ duration: 0.8, delay: shouldReduceMotion ? 0 : 0.25, ease: EASE }}
-          className="relative ml-auto aspect-[4/3] w-full max-w-lg overflow-hidden rounded-2xl shadow-2xl shadow-black/30 ring-1 ring-white/20 lg:max-w-none"
+          className="relative ml-auto aspect-[4/3] w-full max-w-xl overflow-hidden rounded-2xl shadow-2xl shadow-black/30 ring-1 ring-white/20 lg:max-w-none"
         >
           <Image
             src="/assets/source/About-1536x681.png"
             alt="The dr.Anne plan Expanded Edition book, displayed on a shelf"
             fill
             priority
-            className="object-cover object-[78%_38%]"
+            className="object-cover object-[92%_38%]"
           />
         </motion.div>
       </div>

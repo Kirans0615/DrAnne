@@ -12,9 +12,29 @@ fully static site, no server runtime, no API routes, no Server Actions · Tailwi
 CSS v4 (CSS-first `@theme` tokens) · shadcn/ui (New York style, Radix primitives)
 · `motion` for client-side animation · typed content in `/content` (no Zod
 runtime validation needed without forms — the types alone are the contract) ·
-hosted on **GitHub Pages** via `.github/workflows/deploy.yml`, custom domain
-`dranne.org` via `public/CNAME` · Vitest + Playwright + axe-core + Lighthouse CI
-for testing.
+hosted on **GitHub Pages** via `.github/workflows/deploy.yml`, served as a
+project page at `https://kirans0615.github.io/DrAnne/` (`NEXT_PUBLIC_BASE_PATH=/DrAnne`
+set in the workflow, read by `next.config.ts` and `lib/base-path.ts`) · Vitest +
+Playwright + axe-core + Lighthouse CI for testing. Light mode only — dark mode
+was removed per direct client request (see `docs/BRAND.md`).
+
+**GitHub Pages project-page gotchas, in case this ever moves to a custom
+domain or a different repo name:**
+- `next/image`'s `unoptimized: true` does **not** apply `basePath` to local
+  image `src`s — it renders a plain `<img src="...">` with the raw prop
+  value, which 404s every image once served from a subpath. The fix is a
+  custom loader (`lib/image-loader.ts`, wired in via `images.loader: "custom"`
+  in `next.config.ts`) that prepends `basePath` itself. Any raw `<img>`/
+  `<video><source>` that bypasses `next/image` (there's exactly one:
+  `components/dranne/video-background.tsx`) has to prepend `basePath`
+  manually too — it imports the same constant from `lib/base-path.ts`.
+- GitHub Pages runs Jekyll on published content by default, which silently
+  strips any folder starting with `_` — including Next's own `_next/`
+  output. `public/.nojekyll` (an empty file) disables that.
+- `public/CNAME` was removed for now: it pointed at `dranne.org`, which has
+  no DNS configured yet. Restoring it later means also clearing
+  `NEXT_PUBLIC_BASE_PATH` (a custom domain serves from the root, not
+  `/DrAnne`) and re-adding it to the Pages settings.
 
 No database, no forms, no email-sending backend. Every contact point is a
 `mailto:` link. The Registry (`content/circles.ts`) is a static list maintained
