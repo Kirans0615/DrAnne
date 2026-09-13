@@ -9,6 +9,7 @@ import { HeroSection } from "@/components/dranne/hero-section";
 import { ThreeKeysTriptych } from "@/components/dranne/three-keys-triptych";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { Reveal } from "@/components/dranne/reveal";
+import { VideoBackground } from "@/components/dranne/video-background";
 
 const BENEFIT_ICONS = [Unlock, Sparkles, InfinityIcon];
 
@@ -72,12 +73,7 @@ export default function HomePage() {
           href="/the-plan/how-it-works"
           className="group relative block size-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-red"
         >
-          <Image
-            src="/assets/source/image5.png"
-            alt="A facilitator assisting a participant during a dr.Anne plan session"
-            fill
-            className="object-cover object-[center_55%] transition-transform duration-500 motion-safe:group-hover:scale-105"
-          />
+          <VideoBackground className="absolute inset-0 size-full object-cover transition-transform duration-500 motion-safe:group-hover:scale-105" />
           <span className="absolute inset-0 flex items-end bg-gradient-to-t from-black/65 via-black/15 to-transparent p-6">
             <span className="rounded-full bg-white px-5 py-2 text-sm font-semibold text-brand-red-ink">
               See how it works
