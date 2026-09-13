@@ -13,11 +13,15 @@ import { basePath } from "@/lib/base-path";
  * motion that setting is meant to suppress.
  *
  * The declarative `autoPlay` attribute alone proved unreliable once React
- * hydrates the element client-side (the video sat paused on its first
- * frame) — an explicit `.play()` call once metadata loads is the robust
- * fix; the returned promise is intentionally ignored on rejection, since a
- * blocked autoplay just leaves the poster frame showing, which is a fine
- * fallback.
+ * hydrates the element client-side. The first JS fix (call `.play()` only
+ * after a `loadeddata` event) was a real bug, not just a belt-and-braces
+ * fallback: network inspection showed the browser never requested the mp4
+ * at all, only the poster image — `.play()` is frequently what *triggers*
+ * the browser to start loading a video whose network fetch it had
+ * otherwise deferred, so waiting for a load event before calling `.play()`
+ * was a deadlock (waiting for the thing that only that same call starts).
+ * Calling `.load()` then `.play()` unconditionally on mount is the correct,
+ * standard fix.
  */
 export function VideoBackground({ className }: { className?: string }) {
   const shouldReduceMotion = useReducedMotion();
@@ -28,18 +32,10 @@ export function VideoBackground({ className }: { className?: string }) {
     const video = videoRef.current;
     if (!video) return;
 
-    const tryPlay = () => {
-      video.play().catch(() => {
-        // Autoplay blocked — the poster frame remains visible, which is fine.
-      });
-    };
-
-    if (video.readyState >= 2) {
-      tryPlay();
-    } else {
-      video.addEventListener("loadeddata", tryPlay, { once: true });
-      return () => video.removeEventListener("loadeddata", tryPlay);
-    }
+    video.load();
+    video.play().catch(() => {
+      // Autoplay blocked — the poster frame remains visible, which is fine.
+    });
   }, [shouldReduceMotion]);
 
   if (shouldReduceMotion) {
